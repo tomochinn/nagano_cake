@@ -1,2 +1,13 @@
-<h1>Public::Customers#quit</h1>
-<p>Find me in app/views/public/customers/quit.html.erb</p>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="mx-auto text-center">
+        <h5>本当に退会しますか？</h5>
+        <p>退会すると、会員登録情報や</p>
+        <p>これまでの購入履歴が閲覧できなくなります。</p>
+        <p>退会する場合は、「退会する」をクリックしてください。</p>
+        <%= link_to "退会しない", customers_mypage_path %>
+        <%= f.submit "退会する" %>
+      </div>
+    </div>
+  </body>
