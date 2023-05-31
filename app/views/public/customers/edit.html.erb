@@ -36,6 +36,6 @@
 </table>
 
 <%= f.submit '変更内容を保存', class: "btn btn-success" %>
-<%= f.submit '退会する', class: "btn btn-danger" %>
+<%= link_to '退会する', customers_quit_path, class: "btn btn-danger" %>
 
 <% end %>

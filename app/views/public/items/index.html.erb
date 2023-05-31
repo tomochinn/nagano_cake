@@ -20,9 +20,42 @@
       </table>
     </div>
 
-  <div class="mx-auto col-12 col-sm-10 col-lg-8 col-xl-6">
-    <h2>商品一覧（全　件）</h2>
-    いちごのショートケーキ
+    <div class="mx-auto col-md-10">
+      <h2>
+        商品一覧
+        <span>
+          （全 <%= @items.total_count %> 件）
+        </span>
+      </h2>
+
+      <div class="row">
+      <% @items.each do |item| %>
+        <div class="col-3">
+          <table>
+            <tr>
+              <td>
+                <!--adminサイドで登録した商品イメージ-->
+                <%= link_to item_path(item.id) do %>
+                <%= image_tag item.get_image(100,100) %>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <!--adminサイドで登録した商品名-->
+              <td><%= link_to item.name, item_path(item.id) %></td>
+            </tr>
+            <tr>
+              <!--adminサイドで登録した商品価格-->
+              <td><%= item.price %></td>
+            </tr>
+          </table>
+        </div>
+      <% end %>
+      </div>
+
+    </div>
   </div>
-  
+
+<%= paginate @items %>
+
 </div>

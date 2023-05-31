@@ -1,5 +1,6 @@
 class Admin::ItemsController < ApplicationController
   def index
+    @items = Item.all
   end
 
   def new
@@ -7,14 +8,16 @@ class Admin::ItemsController < ApplicationController
   end
 
   def create
-    @items = Item.all
     @item = Item.new(item_params)
-    # saveメソッド
     @item.save
+    #先ほど新規登録したitemの詳細ページにリダイレクト
     redirect_to admin_item_path(@item.id)
   end
 
   def show
+    @item = Item.find(params[:id])
+    # submit'カートに入れる'を実行するために.newのアクションが必要
+    @cart_item = CartItem.new
   end
 
   def edit
@@ -23,15 +26,15 @@ class Admin::ItemsController < ApplicationController
 
   def update
     @item = Item.find(params[:id])
-    # saveメソッド
     @item.save
+    #先ほど編集したitemの詳細ページにリダイレクト
     redirect_to admin_item_path(@item.id)
   end
 
 private
   # ストロングパラメータ
   def item_params
-    params.require(:item).permit(:name, :introduction, :price)
+    params.require(:item).permit(:image, :name, :introduction, :price, :id)
   end
-  
+
 end

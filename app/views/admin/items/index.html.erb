@@ -8,11 +8,12 @@
       </tr>
     </thead>
     <tbody>
-      <!--each文-->
+      <% @items.each do |item| %>
       <tr>
-        <td>1</td>
-        <td>洋梨のチーズタルト</td>
-        <td>1,200</td>
+        <td><%= item.id %></td>
+        <td><%= link_to item.name, admin_item_path(item.id) %></td>
+        <td><%= item.price %></td>
       </tr>
+      <% end %>
     </tbody>
   </table>
