@@ -9,8 +9,9 @@
       <th>小計</th>
     </tr>
   </thead>
-  
+
   <tbody>
+    
     <!--current_customerがカートの中に入れた商品を表示する-->
     <% @cart_items.each do |cart_item| %>
     <tr>
@@ -19,14 +20,34 @@
        <%= cart_item.item.name %>
       </td>
       <td><%= cart_item.item.with_tax_price %></td>
-      <td><%= cart_item.amount %></td>
+      <td>
+        <%= form_with model: @cart_item, url:cart_item_path(cart_item.id), method: :patch do |f| %>
+          <%= f.select :amount, *[1..10] %>
+          
+        <% end %>
+        <%= link_to "変更", cart_item_path(cart_item.id), method: :patch, class: "btn btn-success" %>
+      </td>
       <td><%= cart_item.subtotal %></td>
-      <td>削除する</td>
-      <%# @合計金額 +=  cart_item.subtotal %>
+      <td>
+        <% if cart_item.customer == current_customer %>
+          <%= link_to "削除する", cart_item_path(cart_item.id), method: :delete, class: "btn btn-danger", "data-confirm" => "本当に削除しますか？" %>
+        <% end %>
+      </td>
+      <% @total_price += cart_item.subtotal %>
+      
     </tr>
     <% end %>
-    買い物を続ける
-    合計金額
-    情報入力に進む
+    
   </tbody>
 </table>
+    
+<!--current_customerがカートに入れた商品をすべて削除する-->
+<%# if @cart_items.customer == current_customer %>
+  <%= link_to "カートを空にする", cart_items_destroy_all_path, method: :delete, class: "btn btn-danger", "data-confirm" => "本当に削除しますか？" %>
+<%# end %>
+<%= link_to "買い物を続ける", root_path, class: "btn btn-primary" %>
+<%= link_to "情報入力に進む", new_order_path, class: "btn btn-success" %>
+  
+合計金額
+<!--a += b  →  a=a+bと同じ-->
+<%= @total_price %>
