@@ -1,6 +1,6 @@
-<h2>商品詳細</h2>
-
 <div class="container px-5 px-sm-0">
+  <h2>商品詳細</h2>
+  
   <div class="row">
     <div class="col-md-3">
       <% if @item.image.attached? %>
@@ -9,25 +9,26 @@
         <%= image_tag 'default-image.jpg', size: "200x200" %>
       <% end %>
     </div>
+
+
+    <div class="col-md-8 offset-md-1">
+    
+    <table class="table-border-0">
+      <tr>
+        <th>商品名</th>
+        <td><%= @item.name %></td>
+      </tr>
+      <tr>
+        <th>商品説明</th>
+        <td><%= @item.introduction %></td>
+      </tr>
+      <tr>
+        <th>税込価格(税抜価格)</th>
+        <td><%= @item.price %></td>
+      </tr>
+    </table>
+    
+    <%= link_to "編集する", edit_admin_item_path, class: "btn btn-success" %>
+    
   </div>
 </div>
-
-
-<div class="col-md-8 offset-md-1">
-
-<table class="table table-bordered">
-  <tr>
-    <th>商品名</th>
-    <td><%= @item.name %></td>
-  </tr>
-  <tr>
-    <th>商品説明</th>
-    <td><%= @item.introduction %></td>
-  </tr>
-  <tr>
-    <th>税込価格(税抜価格)</th>
-    <td><%= @item.price %></td>
-  </tr>
-</table>
-
-<%= link_to "編集する", edit_admin_item_path %>

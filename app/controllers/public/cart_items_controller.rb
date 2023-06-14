@@ -22,10 +22,10 @@ class Public::CartItemsController < ApplicationController
       cart_item = @cart_items.new(cart_item_params)
       cart_item.save
     end
-  
+
     redirect_to cart_items_path, notice: 'Successfully added item to your cart'
   end
-  
+
   def update
     @cart_item = CartItem.find(params[:id])
     @cart_item.update(cart_item_params)
@@ -44,8 +44,8 @@ class Public::CartItemsController < ApplicationController
     # current_customer.cart_items.destroy_all
     redirect_to cart_items_path, notice: 'Successfully deleted all cart item'
   end
-  
-  
+
+
 
   private
 
