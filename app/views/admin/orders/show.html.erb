@@ -7,19 +7,24 @@
         <thead>
           <tr>
             <td>購入者</td>
-            <td></td>
+            <td><%= @order.customer.full_name %></td>
           </tr>
           <tr>
             <td>注文日</td>
-            <td></td>
+            <td><%= @order.created_at.strftime("%Y/%m/%d") %></td>
           </tr>
           <tr>
             <td>配送先</td>
-            <td></td>
+            <td>
+              〒
+              <%= @order.postal_code %></br>
+              <%= @order.address %></br>
+              <%= @order.recipient_name %>
+            </td>
           </tr>
           <tr>
             <td>支払方法</td>
-            <td></td>
+            <td><%= @order.payment_method_i18n %></td>
           </tr>
         </thead>
       </table>
@@ -42,39 +47,44 @@
         </thead>
 
         <tbody>
-          
-          <!--customerの注文履歴を表示する-->
+
+          <!--購入者のorder_detailsを表示する-->
           <% @order_details.each do |order_detail| %>
           <tr>
-            <td><%= order_detail.item.name %></td>
+            <td>
+              <!--購入した商品名を表示する-->
+              <%= order_detail.item.name %>
+            </td>
             <td><%= order_detail.item.with_tax_price %></td>
             <td><%= order_detail.amount %></td>
             <td><%= order_detail.subtotal %></td>
-      
-            <%# @total_price += cart_item.subtotal %>
+
+            <% @total_price += order_detail.subtotal %>
           </tr>
           <% end %>
         </tbody>
       </table>
     </div>
   </div>
-      
-  <div class="col-md-3">
-    <table class="table table-hover table-inverse">
-      <thead>
-        <tr>
-          <td>商品合計</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>送料</td>
-          <td>800円</td>
-        </tr>
-        <tr>
-          <td>請求金額合計</td>
-          <td></td>
-        </tr>
-      </thead>
-    </table>
+
+  <div class="row">
+    <div class="col-md-3">
+      <table class="table table-hover table-inverse">
+        <thead>
+          <tr>
+            <td>商品合計</td>
+            <td><%= @total_price %>円</td>
+          </tr>
+          <tr>
+            <td>送料</td>
+            <td>800円</td>
+          </tr>
+          <tr>
+            <td>請求金額合計</td>
+            <td><%= 800+@total_price %>円</td>
+          </tr>
+        </thead>
+      </table>
+    </div>
   </div>
 </div>

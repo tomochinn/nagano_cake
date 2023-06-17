@@ -5,6 +5,7 @@ class Public::AddressesController < ApplicationController
   
   def create
     @address = Address.new(address_params)
+    @address.customer_id = current_customer.id
     @address.save
     redirect_to addresses_path
   end
@@ -33,7 +34,7 @@ class Public::AddressesController < ApplicationController
   private
   # ストロングパラメータ
   def address_params
-    params.require(:address).permit(:postal_code, :address, :recipient_name)
+    params.require(:address).permit(:postal_code, :address, :recipient_name, :customer_id)
   end
   
 end

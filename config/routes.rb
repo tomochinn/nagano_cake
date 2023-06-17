@@ -39,7 +39,7 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
     root to: 'homes#top'
     resources :items, only: [:index, :new, :create, :show, :edit, :update]
     resources :customers, only: [:index, :show, :edit, :update]
-    resources :order_details, only: [:show]
+    resources :orders, only: [:show]
   end
 
 

@@ -7,7 +7,7 @@
 <%= f.hidden_field :address, :value => @order.address %>
 <%= f.hidden_field :recipient_name, :value => @order.recipient_name %>
 <%= f.hidden_field :shipping_fee, :value => 800 %>
-<%= f.hidden_field :billing_amount, :value => 800+@total_price %>
+
 <%= f.hidden_field :customer_id, :value => @order.customer_id %>
 
 <div class="container px-5 px-sm-0">
@@ -79,5 +79,6 @@
     </div>
   </div>
 </div>
+<%= f.hidden_field :billing_amount, :value => 800+@total_price %>
 <%= f.submit "注文を確定する", class: "btn btn-success" %>
 <% end %>

@@ -1,3 +1,4 @@
+<!--customersのordersの一覧-->
 <h2>注文履歴一覧</h2>
 
 <table class="table table-hover table-inverse">
@@ -10,11 +11,21 @@
   </thead>
 
   <tbody>
+    <!--customerの注文履歴一覧-->
     <% @orders.each do |order| %>
     <tr>
-      <td><%= link_to order.created_at.strftime("%Y/%m/%d"), admin_order_detail_path(order_detail.id) %></td>
-      <td><%#= customer.last_name, admin_customer_path(customer.id) %></td>
-      <td><%= order.amount %></td>
+      <td>
+        <!--customerが商品を購入した(orderをcreateした)日時-->
+        <%= link_to order.created_at.strftime("%Y/%m/%d %H:%M:%S"), admin_order_path(order.id) %>
+      </td>
+      <td>
+        <!--注文したcustomerのfull_name-->
+        <%= order.customer.full_name %>
+        </td>
+      <td>
+        <!--注文した商品の個数-->
+        <%= order.total_amount %>
+        </td>
     </tr>
     <% end %>
   </tbody>

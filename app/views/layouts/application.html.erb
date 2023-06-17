@@ -15,6 +15,7 @@
       <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
           <a class="navbar-brand p-3" href="/">LOGO</a>
+          
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -34,6 +35,11 @@
                   <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class: 'nav-link text-dark' %>
                 </li>
                 <% elsif customer_signed_in? %>
+                
+                ようこそ、
+                <%= current_customer.last_name %>
+                さん！
+          
                 <li class="nav-item">
                   <%= link_to 'マイページ', customers_mypage_path, class: 'nav-link text-dark' %>
                 </li>

@@ -26,7 +26,7 @@ class Admin::ItemsController < ApplicationController
 
   def update
     @item = Item.find(params[:id])
-    @item.save
+    @item.update(item_params)
     #先ほど編集したitemの詳細ページにリダイレクト
     redirect_to admin_item_path(@item.id)
   end

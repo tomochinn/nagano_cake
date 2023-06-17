@@ -40,28 +40,48 @@ class Public::OrdersController < ApplicationController
   end
 
   def thanks
-    # カートの中身を空にする
-    # current_customer.cart_items.destroy_all
   end
 
   def create
     @order = Order.new(order_params)
-    # current_customerの注文を確定する
     @order.customer_id = current_customer.id
+    # current_customerの注文を確定する
     @order.save
-    # byebug
+    
+    current_customer.cart_items.each do |cart_item| 
+      # order_detailモデルの新しいインスタンス作成
+      order_detail = OrderDetail.new
+      
+      # order_detailのorder_idに、@order.idを設定
+      order_detail.order_id = @order.id
+      # order_detailのitem_idに、cart_item内の商品のID（item_id）を設定
+      order_detail.item_id = cart_item.item_id
+      # order_detailのamountに、cart_item内のアイテムのamountを設定
+      order_detail.amount = cart_item.amount
+      # order_detailのpurchase_priceに、cart_item内のitem.with_tax_price（itemモデルに税込みの計算を定義している）を設定
+      order_detail.purchase_price = cart_item.item.with_tax_price
+      # order_detailをデータベースに保存
+      order_detail.save
+      # 注文完了したらカート内を空にする
+      cart_item.destroy
+    end
+    
+    # サンクスページに遷移する
     redirect_to orders_thanks_path
+    
   end
 
   def index
-    @orders = Order.all
-    # current_customerの注文商品を確認する
-    # @item.customer_id = current_customer.id
+    @orders = current_customer.orders
     @total_price = 0
   end
 
   def show
     @order = Order.find(params[:id])
+    # @order_detailsで@orderの中のorder_detailsを取得
+    @order_details = @order.order_details
+    # current_customerの@order_detailsを表示する
+    # @order_detail = current_customer.@order_details
     @total_price = 0
   end
 

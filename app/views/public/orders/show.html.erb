@@ -3,72 +3,82 @@
 <div class="container px-5 px-sm-0">
   <div class="row">
 
-<div class="col-md-8">
-  <h4>注文情報</h4>
-  <table class="table table-hover table-inverse">
-    <thead>
-      <tr>
-        <td>注文日</td>
-        <td><%= @order.created_at.strftime("%Y/%m/%d") %></td>
-      </tr>
-      <tr>
-        <td>配送先</td>
-        <td>
-          〒<%= @order.postal_code %></br>
-          <%= @order.address %></br>
-          <%= @order.recipient_name %>
-        </td>
-      </tr>
-      <tr>
-        <td>支払い方法</td>
-        <td><%= @order.payment_method_i18n %></td>
-      </tr>
-    </thead>
-  </table>
-</div>
+    <div class="col-md-8">
+      <h4>注文情報</h4>
+      <table class="table table-hover table-inverse">
+        <thead>
+          <tr>
+            <td>注文日</td>
+            <td><%= @order.created_at.strftime("%Y/%m/%d") %></td>
+          </tr>
+          <tr>
+            <td>配送先</td>
+            <td>
+              〒
+              <%= @order.postal_code %></br>
+              <%= @order.address %></br>
+              <%= @order.recipient_name %>
+            </td>
+          </tr>
+          <tr>
+            <td>支払い方法</td>
+            <td><%= @order.payment_method_i18n %></td>
+          </tr>
+        </thead>
+      </table>
+    </div>
+    
+    
+    
+    <div class="col-md-9">
+      <table class="table table-hover table-inverse">
+    
+        <thead>
+          <tr>
+            <th>商品</th>
+            <th>単価(税込)</th>
+            <th>個数</th>
+            <th>小計</th>
+          </tr>
+        </thead>
+    
+        <tbody>
+          <!--注文(order)と商品(item)は注文詳細(order_detail)が中間テーブルとなって結ばれている-->
+          <% @order_details.each do |order_detail| %>
+          <tr>
+            <td>
+              <!--注文時(order_details)の商品(item)の名前(name)-->
+              <%= order_detail.item.name %>
+            </td>
+            <td><%= order_detail.item.price %></td>
+            <td><%= order_detail.amount %></td>
+            <td><%= order_detail.purchase_price %></td>
+          </tr>
+          <% @total_price += order_detail.purchase_price %>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="col-md-3">
+      <h4>請求情報</h4>
+      <table class="table table-hover table-inverse">
+        <thead>
+          <tr>
+            <td>商品合計</td>
+            <td><%= @total_price %></td>
+          </tr>
+          <tr>
+            <td>配送料</td>
+            <td>800</td>
+          </tr>
+          <tr>
+            <td>ご請求額</td>
+            <td><%= @order.billing_amount %></td>
+          </tr>
+        </thead>
+      </table>
+    </div>
 
-<div class="col-md-3">
-  <h4>請求情報</h4>
-  <table class="table table-hover table-inverse">
-    <thead>
-      <tr>
-        <td>商品合計</td>
-        <td><%= @total_price%></td>
-      </tr>
-      <tr>
-        <td>配送料</td>
-        <td>800</td>
-      </tr>
-      <tr>
-        <td>ご請求額</td>
-        <td><%= @order.billing_amount %></td>
-      </tr>
-    </thead>
-  </table>
-</div>
-
-<div class="col-md-9">
-  <table class="table table-hover table-inverse">
-
-    <thead>
-      <tr>
-        <th>商品</th>
-        <th>単価(税込)</th>
-        <th>個数</th>
-        <th>小計</th>
-      </tr>
-    </thead>
-
-    <tbody>
-
-      <!--current_customerの注文履歴詳細を表示する-->
-      <tr>
-        <td><%= @order.items.name %></td>
-        <td><%#= @order.items.price %></td>
-        <td><%#= @order.amount %></td>
-        <td><%#= @order.subtotal %></td>
-      </tr>
-    </tbody>
-  </table>
-
+  </div>
 </div>

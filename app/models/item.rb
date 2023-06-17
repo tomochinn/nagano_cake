@@ -1,7 +1,7 @@
 class Item < ApplicationRecord
   has_one_attached :image
   has_many :cart_items, dependent: :destroy
-  belongs_to :order
+  # belongs_to :order
 
   def get_image(width, height)
     unless image.attached?
